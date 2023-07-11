@@ -25,4 +25,6 @@ const responseSchema = new Schema(
   },
 );
 
-module.exports = responseSchema;
+const Reactions = model('Reactions', responseSchema);
+
+module.exports = Reactions;
