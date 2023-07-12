@@ -65,5 +65,46 @@ module.exports = {
     } catch (err) {
       res.status(500).json(err);
     }
-  }
+  },
+    async addFriend(req, res) {
+        try {
+          const user = await User.findById(req.params.userId);
+          const friend = await User.findById(req.params.friendId);
+    
+          if (!user || !friend) {
+            return res.status(404).json({ message: 'User or friend not found' });
+          }
+    
+          user.friends.push(friend._id);
+          friend.friends.push(user._id);
+    
+          await user.save();
+          await friend.save();
+    
+          res.json({ message: 'Friend added successfully' });
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      },
+      async removeFriend(req, res) {
+        try {
+          const user = await User.findById(req.params.userId);
+          const friend = await User.findById(req.params.friendId);
+    
+          if (!user || !friend) {
+            return res.status(404).json({ message: 'User or friend not found' });
+          }
+    
+          user.friends.pull(friend._id);
+          friend.friends.pull(user._id);
+    
+          await user.save();
+          await friend.save();
+    
+          res.json({ message: 'Friend removed successfully' });
+        } catch (err) {
+          res.status(500).json(err);
+        }
+      },
+    
 };

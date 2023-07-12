@@ -22,5 +22,11 @@ router.route('/:userId').delete(deleteUser);
 // /api/users/create
 router.route('/createuser').post(createUser)
 
+// POST /api/users/:userId/friends/:friendId
+router.post('/:userId/friends/:friendId', addFriend);
+
+// DELETE /api/users/:userId/friends/:friendId
+router.delete('/:userId/friends/:friendId', removeFriend);
+
 
 module.exports = router;
